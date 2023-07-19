@@ -26,8 +26,8 @@ macro caster*(def): untyped =
     if i != 0: # ignore return type
       let t = p[IdentDefType]
       if t.matchInfix "as":
+        result.params[i][IdentDefType] = t[InfixLeftSide]
         for id in p[IdentDefNames]:
           before.add newLetStmt(id, newTree(nnkCast, t[InfixRightSide], id))
-          result.params[i][IdentDefType] = t[InfixLeftSide]
 
   result.body = newStmtList(before, result.body)
