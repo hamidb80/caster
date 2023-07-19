@@ -15,7 +15,6 @@ suite "basic":
 
     check "97" == toByteRepr 'a'
 
-
   test "Inheritance":
     proc wrap(callback: proc(e: Event)) =
       callback Event MouseEvent(mousePos: (1, 2))
@@ -44,3 +43,9 @@ suite "advanced":
       check c is char
 
     p2 '1', '2', '3'
+
+  test "grouped params with default value":
+    func toByteRepr(a,b,c: char as uint8 = '0'): string {.caster.} =
+      $(a+b+c)
+
+    check $(48*3) == toByteRepr()
